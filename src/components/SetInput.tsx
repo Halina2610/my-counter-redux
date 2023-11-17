@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import './../App.css'
+import '../App.css'
 
 type SetInputPropsType = {
     value: number
@@ -21,6 +21,7 @@ export const SetInput = (props: SetInputPropsType) => {
                 type="number"
                 value={props.value}
                 onChange={props.onChange}
+                placeholder={''}
             />
         </div>
     );

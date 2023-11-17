@@ -1,5 +1,3 @@
-import {setMinValue} from "./settingActions";
-
 export type CounterState = {
     count: number;
 }

@@ -14,3 +14,4 @@ export const reset = (value: number): ResetAction => ({
     type: 'RESET',
     payload: value
 });
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, ChangeEvent, useReducer } from 'react';
+import React, {useEffect, useCallback, ChangeEvent, useReducer, useMemo} from 'react';
 import './App.css';
 import { Display } from './components/counter/Display';
 import { Button } from './components/Button';
@@ -51,7 +51,8 @@ function App() {
         settingDispatch(changeMinValue(newValue));
     }, []);
 
-    const isCorrectValue = maxValue > 0 && minValue >= 0 && maxValue > minValue;
+    const isCorrectValue = useMemo(
+        () => maxValue > 0 && minValue >= 0 && maxValue > minValue, [maxValue, minValue]);
 
     const setLimitsHandler = useCallback(() => {
         if (isCorrectValue) {
@@ -67,9 +68,9 @@ function App() {
         <div className="App">
             <div className="counter-wrapper">
                 <div>max value:</div>
-                <SetInput value={maxValue} onChange={changeMaxValueHandler} />
+                <SetInput value={maxValue} onChange={changeMaxValueHandler} minValue={minValue} maxValue={maxValue}/>
                 <div>start value:</div>
-                <SetInput value={minValue} onChange={changeMinValueHandler} />
+                <SetInput value={minValue} onChange={changeMinValueHandler} minValue={minValue} maxValue={maxValue}/>
 
                 <div className="button-wrapper">
                     <Button name="set" callback={setLimitsHandler} disabled={!isCorrectValue} />
@@ -80,8 +81,8 @@ function App() {
                 <Display count={count} maxNum={maxValue} minNum={minValue} />
 
                 <div className="button-wrapper">
-                    <Button callback={incHandler} name="inc" disabled={!isCorrectValue} />
-                    <Button callback={resetHandler} name="reset" disabled={!isCorrectValue} />
+                    <Button callback={incHandler} name="inc" disabled={!isCorrectValue || count === maxValue} />
+                    <Button callback={resetHandler} name="reset" disabled={!isCorrectValue || count === minValue} />
                 </div>
             </div>
         </div>

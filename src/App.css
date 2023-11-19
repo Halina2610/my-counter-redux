@@ -13,7 +13,7 @@
     height: 300px;
     margin: 150px auto;
     border-radius: 10px;
-    border: 3px solid #0e4f4f;
+    border: 1px solid #0e4f4f;
     box-shadow: 0 0 10px #0e4f4f;
     background-color: #dfffff;
 
@@ -26,14 +26,14 @@
     border-radius: 5px;
     background-color: #6ae0e0;
     font-size: 1.5em;
-    border: 3px solid #0e4f4f;
+    border: 1px solid #0e4f4f;
 }
 
 .display {
     width: 350px;
     height: 180px;
     margin: 10px auto;
-    border: 3px solid #0e4f4f;
+    border: 1px solid #0e4f4f;
 
     background-color: #6ae0e0;
     border-radius: 10px;
@@ -43,6 +43,11 @@
 
 .display div {
     font-size: 100px;
+
+}
+.display p {
+    font-size: 20px;
+    color: #ab1717;
 }
 
 .button-wrapper {
@@ -50,7 +55,7 @@
     width: 350px;
     height: 80px;
     margin: 10px auto;
-    border: 3px solid #0e4f4f;
+    border: 1px solid #0e4f4f;
     border-radius: 5px;
 }
 

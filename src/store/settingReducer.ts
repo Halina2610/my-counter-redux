@@ -1,40 +1,38 @@
+
+
 export type SettingState = {
     maxValue: number;
     minValue: number;
-    invalidMinValue: boolean;
-}
+};
 
-type SetMaxValueAction = {
-    type: 'SET_MAX_VALUE';
+type ChangeMaxValueAction = {
+    type: 'CHANGE_MAX_VALUE';
     payload: number;
-}
+};
 
-type SetMinValueAction = {
-    type: 'SET_MIN_VALUE';
+type ChangeMinValueAction = {
+    type: 'CHANGE_MIN_VALUE';
     payload: number;
-}
+};
 
-type SettingAction = SetMaxValueAction | SetMinValueAction;
+export type SettingAction = ChangeMaxValueAction | ChangeMinValueAction;
 
 const initialSettingState: SettingState = {
     maxValue: 5,
     minValue: 0,
-    invalidMinValue: false
 };
 
 const settingReducer = (state: SettingState = initialSettingState, action: SettingAction): SettingState => {
     switch (action.type) {
-        case 'SET_MAX_VALUE':
+        case 'CHANGE_MAX_VALUE':
             return {
                 ...state,
                 maxValue: action.payload,
-                invalidMinValue: action.payload <= state.minValue
             };
-        case 'SET_MIN_VALUE':
+        case 'CHANGE_MIN_VALUE':
             return {
                 ...state,
                 minValue: action.payload,
-                invalidMinValue: action.payload < 0
             };
         default:
             return state;
@@ -42,3 +40,13 @@ const settingReducer = (state: SettingState = initialSettingState, action: Setti
 };
 
 export default settingReducer;
+
+export const changeMaxValue = (value: number): ChangeMaxValueAction => ({
+    type: 'CHANGE_MAX_VALUE',
+    payload: value,
+});
+
+export const changeMinValue = (value: number): ChangeMinValueAction => ({
+    type: 'CHANGE_MIN_VALUE',
+    payload: value,
+});

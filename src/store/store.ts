@@ -1,19 +1,22 @@
-import settingReducer, {SettingState} from './settingReducer';
+// store.ts
+import { createStore, combineReducers, Store } from 'redux';
 import counterReducer, {CounterState} from './counterReducer';
-import {combineReducers, createStore} from 'redux';
+import settingReducer, {SettingState} from './settingReducer';
+import limitReducer, {LimitState} from './limitReducer';
 
-
-
-const rootReducer = combineReducers({
-    settings: settingReducer,
-    counter: counterReducer
-})
-export const store = createStore(rootReducer);
-
-export type RootState = {
-    settings: SettingState;
+interface RootState {
     counter: CounterState;
+    setting: SettingState;
+    limit: LimitState;
 }
 
-// @ts-ignore
-window.store = store;
+const rootReducer = combineReducers<RootState>({
+    counter: counterReducer,
+    setting: settingReducer,
+    limit: limitReducer,
+});
+
+const store: Store<RootState> = createStore(rootReducer);
+
+export default store;
+

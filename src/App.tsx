@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo, ChangeEvent, useReducer } from 'react';
+import React, { useEffect, useCallback, ChangeEvent, useReducer } from 'react';
 import './App.css';
 import { Display } from './components/counter/Display';
 import { Button } from './components/Button';
@@ -51,10 +51,7 @@ function App() {
         settingDispatch(changeMinValue(newValue));
     }, []);
 
-    const isCorrectValue = useMemo(
-        () => maxValue > 0 && minValue >= 0 && maxValue > minValue,
-        [maxValue, minValue]
-    );
+    const isCorrectValue = maxValue > 0 && minValue >= 0 && maxValue > minValue;
 
     const setLimitsHandler = useCallback(() => {
         if (isCorrectValue) {

@@ -3,8 +3,8 @@ import './App.css';
 import { Display } from './components/counter/Display';
 import { Button } from './components/Button';
 import { SetInput } from "./components/setting/SetInput";
-import counterReducer, { CounterState, CounterAction, increment, reset } from "./store/counterReducer";
-import settingReducer, { SettingState, SettingAction, changeMaxValue, changeMinValue } from "./store/settingReducer";
+import counterReducer, { CounterState, increment, reset } from "./store/counterReducer";
+import settingReducer, { SettingState, changeMaxValue, changeMinValue } from "./store/settingReducer";
 
 const initialState: CounterState = {
     count: 0,

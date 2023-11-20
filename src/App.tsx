@@ -1,55 +1,49 @@
-import React, {useEffect, useCallback, ChangeEvent, useReducer, useMemo} from 'react';
+import React, { useEffect, useCallback, ChangeEvent, useMemo } from 'react';
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
 import { Display } from './components/counter/Display';
 import { Button } from './components/Button';
 import { SetInput } from "./components/setting/SetInput";
-import counterReducer, { CounterState, increment, reset } from "./store/counterReducer";
-import settingReducer, { SettingState, changeMaxValue, changeMinValue } from "./store/settingReducer";
-
-const initialState: CounterState = {
-    count: 0,
-};
-
-const initialSettingState: SettingState = {
-    maxValue: 5,
-    minValue: 0,
-};
+import { increment, reset } from "./store/counterReducer";
+import { changeMaxValue, changeMinValue } from "./store/settingReducer";
+import {RootStateType} from "./store/store";
 
 function App() {
-    const [state, dispatch] = useReducer(counterReducer, initialState);
-    const [settingState, settingDispatch] = useReducer(settingReducer, initialSettingState);
-    const { count } = state;
-    const { maxValue, minValue } = settingState;
+    const count = useSelector((state: RootStateType) => state.counter.count);
+    const maxValue = useSelector((state: RootStateType) => state.setting.maxValue);
+    const minValue = useSelector((state: RootStateType) => state.setting.minValue);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const localMaxValueNum = localStorage.getItem('counterLimits');
         if (localMaxValueNum) {
             const parsedValue = JSON.parse(localMaxValueNum);
-            settingDispatch(changeMaxValue(parsedValue[0]));
-            settingDispatch(changeMinValue(parsedValue[1]));
+            dispatch(changeMaxValue(parsedValue[0]));
+            dispatch(changeMinValue(parsedValue[1]));
             dispatch(reset(parsedValue[1]));
         }
-    }, []);
+    }, [dispatch]);
 
     const incHandler = useCallback(() => {
         if (count < maxValue) {
             dispatch(increment());
         }
-    }, [count, maxValue]);
+    }, [count, maxValue, dispatch]);
 
     const resetHandler = useCallback(() => {
         dispatch(reset(minValue));
-    }, [minValue]);
+    }, [minValue, dispatch]);
 
     const changeMaxValueHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const newValue = +e.currentTarget.value;
-        settingDispatch(changeMaxValue(newValue));
-    }, []);
+        dispatch(changeMaxValue(newValue));
+    }, [dispatch]);
 
     const changeMinValueHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const newValue = +e.currentTarget.value;
-        settingDispatch(changeMinValue(newValue));
-    }, []);
+        dispatch(changeMinValue(newValue));
+    }, [dispatch]);
 
     const isCorrectValue = useMemo(
         () => maxValue > 0 && minValue >= 0 && maxValue > minValue, [maxValue, minValue]);
@@ -62,15 +56,15 @@ function App() {
                 dispatch(reset(minValue));
             }
         }
-    }, [isCorrectValue, maxValue, minValue, count]);
+    }, [isCorrectValue, maxValue, minValue, count, dispatch]);
 
     return (
         <div className="App">
             <div className="counter-wrapper">
                 <div>max value:</div>
-                <SetInput value={maxValue} onChange={changeMaxValueHandler} minValue={minValue} maxValue={maxValue}/>
+                <SetInput value={maxValue} onChange={changeMaxValueHandler} minValue={minValue} maxValue={maxValue} />
                 <div>start value:</div>
-                <SetInput value={minValue} onChange={changeMinValueHandler} minValue={minValue} maxValue={maxValue}/>
+                <SetInput value={minValue} onChange={changeMinValueHandler} minValue={minValue} maxValue={maxValue} />
 
                 <div className="button-wrapper">
                     <Button name="set" callback={setLimitsHandler} disabled={!isCorrectValue} />

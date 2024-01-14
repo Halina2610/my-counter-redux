@@ -1,5 +1,3 @@
-
-
 export type SettingState = {
     maxValue: number;
     minValue: number;

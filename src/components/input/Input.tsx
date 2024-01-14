@@ -4,19 +4,14 @@ import '../../App.css';
 type SetInputPropsType = {
     value: number;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    maxValue: number;
-    minValue: number;
+    noInvalidValue?: boolean
 };
 
-export const SetInput: React.FC<SetInputPropsType> = ({
+export const Input: React.FC<SetInputPropsType> = ({
                                                           value,
                                                           onChange,
-                                                          maxValue,
-                                                          minValue,
+                                                          noInvalidValue,
                                                       }) => {
-
-    const noInvalidValue =  value < 0 || value > 999 || value > maxValue || value < minValue || minValue === maxValue || maxValue === 0
-
     const isRed = {
         border:
             noInvalidValue
